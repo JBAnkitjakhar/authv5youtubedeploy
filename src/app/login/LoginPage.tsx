@@ -16,14 +16,12 @@ const LoginPage = () => {
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
     try {
-      const result = await signIn("google", { callbackUrl: "/dashboard", redirect: false });
-      if (result?.error) {
-        
-        toast.error("Failed to sign in with Google");
-      } else {
-        toast.success("Logged in successfully with Google");
-        router.push("/dashboard");
-      }
+      const result = await signIn("google", { callbackUrl: "/dashboard" });
+if (result?.error) {
+  toast.error("Failed to sign in with Google");
+} else {
+  toast.success("Logged in successfully with Google");
+}
     } catch (error) {
       console.error("Google sign-in error:", error);
       toast.error("An unexpected error occurred. Please try again later.");

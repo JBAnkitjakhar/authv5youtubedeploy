@@ -1,3 +1,5 @@
+//src/app/dashboard/DashboardContent.tsx
+
 "use client";
 
 import { User } from "next-auth";

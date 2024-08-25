@@ -49,6 +49,7 @@ export const {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
+      console.log('JWT callback', { token, user, account });
       if (user) {
         token.id = user.id
       }
@@ -71,6 +72,7 @@ export const {
       return token
     },
     async session({ session, token }) {
+      console.log('Session callback', { session, token });
       if (session.user) {
         session.user.id = token.id as string
       }
@@ -78,6 +80,7 @@ export const {
       return session
     },
     async redirect({ url, baseUrl }) {
+      console.log('Redirect callback', { url, baseUrl });
       // After successful login, always redirect to dashboard
       if (url.startsWith(`${baseUrl}/login`) || url === baseUrl) {
         return `${baseUrl}/dashboard`;
@@ -86,32 +89,33 @@ export const {
       // this will be handled by the authorized callback
       return url;
     },
-  },cookies: {
-    sessionToken: {
-      name: "authjs.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-    callbackUrl: {
-      name: `authjs.callback-url`,
-      options: {
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-    csrfToken: {
-      name: `authjs.csrf-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
-})
+  },})
+  // cookies: {
+  //   sessionToken: {
+  //     name: "authjs.session-token",
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  //   callbackUrl: {
+  //     name: `authjs.callback-url`,
+  //     options: {
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  //   csrfToken: {
+  //     name: `authjs.csrf-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  // },
+// })
