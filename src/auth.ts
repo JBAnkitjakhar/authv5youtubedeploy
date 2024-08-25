@@ -67,27 +67,25 @@ export const {
           token.id = existingUser._id.toString()
         }
       }
+      console.log("JWT set:", token);
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
       }
+      console.log("Session set:", session); // Add this line
       return session
     },
     async redirect({ url, baseUrl }) {
-      // After successful login, redirect to dashboard
-      if (url.startsWith("/login")) {
-        return `${baseUrl}/dashboard`
+      // After successful login, always redirect to dashboard
+      if (url.startsWith(`${baseUrl}/login`) || url === baseUrl) {
+        return `${baseUrl}/dashboard`;
       }
       // If they try to visit a protected page and are not logged in, 
-      // send them to the login page
-      else if (url.startsWith("/dashboard")) {
-        return url
-      }
-      // Default to homepage
-      return baseUrl
-    }
+      // this will be handled by the authorized callback
+      return url;
+    },
   },cookies: {
     sessionToken: {
       name: "authjs.session-token",
