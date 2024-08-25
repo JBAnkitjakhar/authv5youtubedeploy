@@ -1,32 +1,81 @@
-//src/app/login/page.tsx
+// // src/app/login/LoginPage.tsx
+// "use client";
 
+// import { useState } from 'react';
+// import { useRouter } from 'next/navigation';
+// import { LoginForm } from "@/components/client/form";
+// import Link from "next/link";
+// import { signIn, useSession } from "next-auth/react";
+// import { toast } from "sonner";
+// import { useEffect } from 'react';
+
+// const LoginPage = () => {
+//   const router = useRouter();
+//   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+//   const { data: session, status } = useSession();
+
+//   useEffect(() => {
+//     if (status === 'authenticated') {
+//       router.push('/dashboard');
+//     }
+//   }, [status, router]);
+
+//   const handleGoogleSignIn = async () => {
+//     setIsGoogleLoading(true);
+//     try {
+//       const result = await signIn("google", { callbackUrl: "/dashboard" });
+//       if (result?.error) {
+//         toast.error("Failed to sign in with Google");
+//       }
+//     } catch (error) {
+//       console.error("Google sign-in error:", error);
+//       toast.error("An unexpected error occurred. Please try again later.");
+//     } finally {
+//       setIsGoogleLoading(false);
+//     }
+//   };
+
+// src/app/login/LoginPage.tsx
 "use client"
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { LoginForm } from "@/components/client/form";
-import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { toast } from "sonner";
+import { useState } from 'react'
+import { LoginForm } from "@/components/client/form"
+import Link from "next/link"
+import { signIn } from "next-auth/react"
+import { toast } from "sonner"
+import { useRouter } from 'next/navigation'
 
 const LoginPage = () => {
-  const router = useRouter();
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const router = useRouter()
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
 
   const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true);
+    setIsGoogleLoading(true)
     try {
-      const result = await signIn("google", { callbackUrl: "/dashboard" });
-if (result?.error) {
-  toast.error("Failed to sign in with Google");
-} else {
-  toast.success("Logged in successfully with Google");
-}
+      const result = await signIn("google", { callbackUrl: "/dashboard" })
+      if (result?.error) {
+        toast.error("Failed to sign in with Google")
+      }
     } catch (error) {
-      console.error("Google sign-in error:", error);
-      toast.error("An unexpected error occurred. Please try again later.");
+      console.error("Google sign-in error:", error)
+      toast.error("An unexpected error occurred. Please try again later.")
     } finally {
-      setIsGoogleLoading(false);
+      setIsGoogleLoading(false)
+    }
+  }
+
+  const handleCredentialsLogin = async (email: string, password: string) => {
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("Logged in successfully");
+      router.push('/dashboard');
     }
   };
 

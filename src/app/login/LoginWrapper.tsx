@@ -1,15 +1,30 @@
-// src/app/login/LoginWrapper.tsx
+// // src/app/login/LoginWrapper.tsx
 
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import LoginPage from "./LoginPage";
+// import { auth } from "@/auth";
+// import { redirect } from "next/navigation";
+// import LoginPage from "./LoginPage";
+
+// export default async function LoginWrapper() {
+//   const session = await auth();
+
+//   if (session?.user) {
+//     redirect("/dashboard");
+//   }
+
+//   return <LoginPage />;
+// }
+
+// src/app/login/LoginWrapper.tsx
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
+import LoginPage from "./LoginPage"
 
 export default async function LoginWrapper() {
-  const session = await auth();
+  const session = await auth()
 
   if (session?.user) {
-    redirect("/dashboard");
+    redirect("/dashboard")
   }
 
-  return <LoginPage />;
+  return <LoginPage />
 }
