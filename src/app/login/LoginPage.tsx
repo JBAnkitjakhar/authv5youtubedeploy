@@ -1,40 +1,3 @@
-// // src/app/login/LoginPage.tsx
-// "use client";
-
-// import { useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import { LoginForm } from "@/components/client/form";
-// import Link from "next/link";
-// import { signIn, useSession } from "next-auth/react";
-// import { toast } from "sonner";
-// import { useEffect } from 'react';
-
-// const LoginPage = () => {
-//   const router = useRouter();
-//   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-//   const { data: session, status } = useSession();
-
-//   useEffect(() => {
-//     if (status === 'authenticated') {
-//       router.push('/dashboard');
-//     }
-//   }, [status, router]);
-
-//   const handleGoogleSignIn = async () => {
-//     setIsGoogleLoading(true);
-//     try {
-//       const result = await signIn("google", { callbackUrl: "/dashboard" });
-//       if (result?.error) {
-//         toast.error("Failed to sign in with Google");
-//       }
-//     } catch (error) {
-//       console.error("Google sign-in error:", error);
-//       toast.error("An unexpected error occurred. Please try again later.");
-//     } finally {
-//       setIsGoogleLoading(false);
-//     }
-//   };
-
 // src/app/login/LoginPage.tsx
 "use client"
 
@@ -44,6 +7,7 @@ import Link from "next/link"
 import { signIn } from "next-auth/react"
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
+import { LogIn, UserPlus, Home } from 'lucide-react'
 
 const LoginPage = () => {
   const router = useRouter()
@@ -63,28 +27,15 @@ const LoginPage = () => {
       setIsGoogleLoading(false)
     }
   }
-
-  const handleCredentialsLogin = async (email: string, password: string) => {
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
-
-    if (result?.error) {
-      toast.error(result.error);
-    } else {
-      toast.success("Logged in successfully");
-      router.push('/dashboard');
-    }
-  };
-
+ 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-      <div className="bg-white w-full max-w-md rounded-lg shadow-2xl p-8">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <div className="bg-gray-800/70 backdrop-blur-lg w-full max-w-md rounded-xl shadow-2xl p-8 border border-gray-700">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold">Login</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            Login
+          </h1>
+          <p className="text-gray-400 mt-2">
             Welcome back! Please sign in to your account.
           </p>
         </div>
@@ -92,18 +43,18 @@ const LoginPage = () => {
         <div className="mt-8">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-gray-600"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">or</span>
+              <span className="px-2 bg-gray-800 text-gray-400">or</span>
             </div>
           </div>
           <button
             onClick={handleGoogleSignIn}
             disabled={isGoogleLoading}
-            className="mt-6 w-full flex items-center justify-center space-x-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-lg shadow transition duration-300 ease-in-out disabled:opacity-50"
+            className="mt-6 w-full flex items-center justify-center space-x-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 ease-in-out disabled:opacity-50"
           >
-             <svg
+            <svg
               className="w-5 h-5"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -127,19 +78,19 @@ const LoginPage = () => {
             </svg>
             <span>{isGoogleLoading ? "Signing in..." : "Login with Google"}</span>
           </button>
-          <p className="mt-8 text-center">
+          <p className="mt-8 text-center text-gray-400">
             <Link
               href="/signup"
-              className="text-sm text-blue-600 hover:underline"
+              className="text-sm text-blue-400 hover:underline flex items-center justify-center gap-1"
             >
-              Dont have an account? Sign up
+              <UserPlus className="w-4 h-4" /> Don&#39;t have an account? Sign up
             </Link>
           </p>
-          <p className="mt-2 text-center">
-          <Link href="/" className="text-sm text-blue-600 hover:underline">
-            Home page
-          </Link>
-        </p>
+          <p className="mt-2 text-center text-gray-400">
+            <Link href="/" className="text-sm text-blue-400 hover:underline flex items-center justify-center gap-1">
+              <Home className="w-4 h-4" /> Home page
+            </Link>
+          </p>
         </div>
       </div>
     </div>
